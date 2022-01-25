@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import poker from "../../img/poker.png";
 import AddGame from "../../Modal/AddGame";
 import AddMembers from "../../Modal/AddMembers";
@@ -12,11 +13,10 @@ function Home(props) {
     setShow(false);
     setShowAddmember(true);
   };
-  const finish=()=>{
+  const finish = () => {
     setShowAddmember(false);
-    console.log(props.game);
     navigate("/play");
-  }
+  };
   return (
     <div className="home">
       <div className="wrap">
@@ -24,7 +24,16 @@ function Home(props) {
           <img className="rotate-center" src={poker} alt="poker" />
         </div>
         <h1>Làm ván nào anh em</h1>
-        <button onClick={() => setShow(true)}>Ván mới</button>
+        <div style={{width:"100%",height:300, display:"flex"}}>
+          <Button
+            onClick={() => setShow(true)}
+            variant="warning"
+            size="lg"
+            style={{ padding: "10px 20px", margin:"auto", display:"block" }}
+          >
+            Ván mới
+          </Button>
+        </div>
       </div>
       <AddGame
         setGame={props.setGame}
