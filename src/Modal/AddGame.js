@@ -9,6 +9,7 @@ export default function AddGame(props) {
   const games = useRef(0);
   const handleClose = () => {
     props.setShow(false);
+    setError("");
   };
   const handleSubmit = () => {
     if (numOfMember.current.value < 2 || numOfMember.current.value > 4) {
