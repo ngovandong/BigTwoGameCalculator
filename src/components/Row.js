@@ -9,13 +9,6 @@ function Row(props) {
       <td>{props.index}</td>
       {props.row.map((ele, i) => (
         <td className="no-padding" key={i}>
-          {/* <input
-            className="num"
-            type="number"
-            col={i}
-            onChange={handleChange}
-            value={ele}
-          /> */}
           <Input value={ele} col={i} handleChange={handleChange} />
         </td>
       ))}

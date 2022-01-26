@@ -24,16 +24,27 @@ function Home(props) {
           <img className="rotate-center" src={poker} alt="poker" />
         </div>
         <h1>Làm ván nào anh em</h1>
-        <div style={{width:"100%",height:300, display:"flex"}}>
+        <div style={{ width: "100%", height: 300, display: "flex" }}>
           <Button
             onClick={() => setShow(true)}
             variant="warning"
             size="lg"
-            style={{ padding: "10px 20px", margin:"auto", display:"block" }}
+            style={{ padding: "10px 20px", margin: "auto", display: "block" }}
           >
             Ván mới
           </Button>
         </div>
+        <footer>
+          <p style={{ textAlign: "center", color: "#555" }}>
+            Make by{" "}
+            <a
+              style={{ textDecoration: "none" }}
+              href="https://github.com/ngovandong"
+            >
+              ngovandong
+            </a>
+          </p>
+        </footer>
       </div>
       <AddGame
         setGame={props.setGame}
