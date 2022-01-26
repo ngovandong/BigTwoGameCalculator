@@ -19,16 +19,19 @@ export default function AddGame(props) {
       setError("Vui lòng nhập đúng số ván");
       return;
     }
-
-    const game = {
-      numOfMember: parseInt(numOfMember.current.value),
-      numOfGame: games.current.value,
-    };
-    props.setGame(game);
-    numOfMember.current.value = 0;
-    if (games.current.value) {
-      games.current.value = 0;
+    let game;
+    if (games.current) {
+      game = {
+        numOfMember: parseInt(numOfMember.current.value),
+        numOfGame: games.current.value,
+      };
+    } else {
+      game = {
+        numOfMember: parseInt(numOfMember.current.value),
+        numOfGame: 0,
+      };
     }
+    props.setGame(game);
     setError("");
     props.next();
   };
