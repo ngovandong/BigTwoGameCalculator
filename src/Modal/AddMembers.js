@@ -24,7 +24,7 @@ export default function AddMembers(props) {
             {[...Array(props.game.numOfMember).keys()].map((id) => (
               <Form.Group className="player" id={id} key={id}>
                 <Form.Label>Player {id + 1}</Form.Label>
-                <Form.Control defaultValue={"player"+id} type="text" required />
+                <Form.Control defaultValue={"player"+(id+1)} type="text" required />
               </Form.Group>
             ))}
           </Form>

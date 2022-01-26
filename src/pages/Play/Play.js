@@ -14,6 +14,7 @@ function Play(props) {
   const [result, setResult] = useState([]);
   const [rank, setRank] = useState([]);
   const [done, setDone] = useState(false);
+  const [hideAdd, sethideAdd] = useState(false);
   const navigate = useNavigate();
   const handleChange = (row, col, value) => {
     const newTable = [...table];
@@ -32,14 +33,6 @@ function Play(props) {
     wrap.scrollTo(0, wrap.scrollHeight + 100);
   };
   const addGame = () => {
-    if (props.game.numOfGame) {
-      if (table.length < parseInt(props.game.numOfGame)) {
-        handleAdd();
-      } else {
-        finish();
-      }
-      return;
-    }
     handleAdd();
   };
   const hideClick = () => {
@@ -85,6 +78,9 @@ function Play(props) {
       newRank[ele.index] = i;
     }
     setRank(newRank);
+    if (table.length === parseInt(props.game.numOfGame)) {
+      sethideAdd(true);
+    }
   }, [table]);
 
   useEffect(() => {
@@ -115,17 +111,17 @@ function Play(props) {
               id="logo"
               alt="poker"
             />
-            <Navbar.Brand
+            {props.game.numOfGame&&<Navbar.Brand
               style={{
                 lineHeight: "40px",
-                fontSize: "26px",
+                fontSize: "24px",
                 overflow: "hidden",
                 maxWidth: "200px",
                 display: "inline-block",
               }}
             >
-              {props.game.name}
-            </Navbar.Brand>
+              {"Còn " + (props.game.numOfGame - table.length) + " ván"}
+            </Navbar.Brand>}
           </div>
           <div className="groupBT">
             {!done && (
@@ -142,7 +138,7 @@ function Play(props) {
                 <IoCheckmarkDoneCircle size={25} onClick={finish} />
               </button>
             )}
-            {!done && (
+            {!done && !hideAdd && (
               <button className="circle-btn" onClick={addGame}>
                 <IoMdAddCircle size={25} />
               </button>

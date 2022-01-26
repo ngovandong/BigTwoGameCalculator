@@ -4,7 +4,6 @@ import React, { useRef, useState } from "react";
 export default function AddGame(props) {
   const [error, setError] = useState("");
   const [toggle, setToggle] = useState(false);
-  const name = useRef("");
   const numOfMember = useRef(0);
   const games = useRef(0);
   const handleClose = () => {
@@ -22,13 +21,11 @@ export default function AddGame(props) {
     }
 
     const game = {
-      name: name.current.value,
       numOfMember: parseInt(numOfMember.current.value),
       numOfGame: games.current.value,
     };
     props.setGame(game);
     numOfMember.current.value = 0;
-    name.current.value = "";
     if (games.current.value) {
       games.current.value = 0;
     }
@@ -45,10 +42,6 @@ export default function AddGame(props) {
         <Modal.Body>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form>
-            <Form.Group id="name">
-              <Form.Label>Tên ván</Form.Label>
-              <Form.Control type="text" ref={name} required />
-            </Form.Group>
             <Form.Group id="numbers">
               <Form.Label>Số người chơi</Form.Label>
               <Form.Control

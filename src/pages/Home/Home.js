@@ -39,7 +39,7 @@ function Home(props) {
             Make by{" "}
             <a
               style={{ textDecoration: "none" }}
-              href="https://github.com/ngovandong"
+              href="https://www.facebook.com/dongngo2k1/"
             >
               ngovandong
             </a>
