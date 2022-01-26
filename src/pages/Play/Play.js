@@ -49,8 +49,11 @@ function Play(props) {
   };
 
   const finish = () => {
-    setHide(false);
-    setDone(true);
+    const answer = window.confirm("Kết thúc sớm cho bớt đau khổ?");
+    if (answer) {
+      setHide(false);
+      setDone(true);
+    }
   };
 
   const newGame = () => {
