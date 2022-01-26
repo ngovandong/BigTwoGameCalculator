@@ -78,7 +78,10 @@ function Play(props) {
       newRank[ele.index] = i;
     }
     setRank(newRank);
-    if (table.length === parseInt(props.game.numOfGame)) {
+    if (
+      props.game.numOfGame &&
+      table.length === parseInt(props.game.numOfGame)
+    ) {
       sethideAdd(true);
     }
   }, [table]);
@@ -111,17 +114,19 @@ function Play(props) {
               id="logo"
               alt="poker"
             />
-            {props.game.numOfGame&&<Navbar.Brand
-              style={{
-                lineHeight: "40px",
-                fontSize: "24px",
-                overflow: "hidden",
-                maxWidth: "200px",
-                display: "inline-block",
-              }}
-            >
-              {"Còn " + (props.game.numOfGame - table.length) + " ván"}
-            </Navbar.Brand>}
+            {props.game.numOfGame && (
+              <Navbar.Brand
+                style={{
+                  lineHeight: "40px",
+                  fontSize: "24px",
+                  overflow: "hidden",
+                  maxWidth: "200px",
+                  display: "inline-block",
+                }}
+              >
+                {"Còn " + (props.game.numOfGame - table.length) + " ván"}
+              </Navbar.Brand>
+            )}
           </div>
           <div className="groupBT">
             {!done && (
