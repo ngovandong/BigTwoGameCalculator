@@ -2,5 +2,10 @@
 
 Link: https://tinhdiemtienlen.netlify.app/
 
-##Screenshoot
-![home]("")
+## Screenshoot
+
+![home](https://github.com/ngovandong/BigTwoGameCalculator/blob/main/img/home.png)
+
+![play](https://github.com/ngovandong/BigTwoGameCalculator/blob/main/img/play.png)
+
+
