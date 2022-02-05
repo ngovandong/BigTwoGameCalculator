@@ -1,9 +1,9 @@
-import Navigate from "./containers/Navigate";
+import React from 'react';
+import Navigate from './containers/Navigate';
+
 function App() {
   return (
-    <div className="App">
-      <Navigate />
-    </div>
+    <Navigate />
   );
 }
 

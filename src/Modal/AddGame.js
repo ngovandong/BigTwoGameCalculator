@@ -1,11 +1,14 @@
 import { Form, Button, Modal, Alert } from "react-bootstrap";
 import React, { useRef, useState } from "react";
-
+import {useDispatch} from 'react-redux';
+import { addGame } from "../features/Game/gameSlice";
 export default function AddGame(props) {
   const [error, setError] = useState("");
   const [toggle, setToggle] = useState(false);
   const numOfMember = useRef(0);
   const games = useRef(0);
+  const dispatch= useDispatch();
+
   const handleClose = () => {
     props.setShow(false);
     setError("");
@@ -22,16 +25,16 @@ export default function AddGame(props) {
     let game;
     if (games.current) {
       game = {
-        numOfMember: parseInt(numOfMember.current.value),
-        numOfGame: games.current.value,
+        numOfMembers: parseInt(numOfMember.current.value),
+        numOfGames: games.current.value,
       };
     } else {
       game = {
-        numOfMember: parseInt(numOfMember.current.value),
-        numOfGame: 0,
+        numOfMembers: parseInt(numOfMember.current.value),
+        numOfGames: 0,
       };
     }
-    props.setGame(game);
+    dispatch(addGame(game));
     setError("");
     props.next();
   };

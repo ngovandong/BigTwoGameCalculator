@@ -1,33 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Container, Table, Button } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
 import poker from "../../img/poker.png";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
-
 import "./Play.css";
 import Row from "../../components/Row";
 import { useNavigate } from "react-router-dom";
-function Play(props) {
+import {
+  changePlay,
+  reset,
+  setDone as DoneGame,
+} from "../../features/Game/gameSlice";
+
+function Play() {
   const [hide, setHide] = useState(true);
-  const [table, setTable] = useState([]);
   const [result, setResult] = useState([]);
   const [rank, setRank] = useState([]);
   const [done, setDone] = useState(false);
   const [hideAdd, sethideAdd] = useState(false);
   const navigate = useNavigate();
+  const game = useSelector((state) => state.game);
+  const dispatch = useDispatch();
   const handleChange = (row, col, value) => {
-    const newTable = [...table];
+    const newTable = [];
+    game.play.forEach((row, i) => (newTable[i] = [...row]));
     newTable[row][col] = value;
-    setTable(newTable);
+    dispatch(changePlay(newTable));
   };
 
   const handleAdd = () => {
     const array = [];
-    for (let i = 0; i < props.game.numOfMember; i++) {
+    for (let i = 0; i < game.numOfMembers; i++) {
       array.push("");
     }
-    setTable((pre) => [...pre, array]);
+    dispatch(changePlay([...game.play, array]));
 
     const wrap = document.getElementById("wrap");
     wrap.scrollTo(0, wrap.scrollHeight + 100);
@@ -46,21 +54,23 @@ function Play(props) {
     if (answer) {
       setHide(false);
       setDone(true);
+      dispatch(DoneGame(true));
     }
   };
 
   const newGame = () => {
     navigate("/");
+    dispatch(reset(""));
   };
 
   useEffect(() => {
     const array = [];
-    for (let i = 0; i < props.game.numOfMember; i++) {
+    for (let i = 0; i < game.numOfMembers; i++) {
       array.push(0);
     }
-    for (let i = 0; i < table.length; i++) {
-      for (let j = 0; j < table[0].length; j++) {
-        array[j] += parseInt(table[i][j]) ? parseInt(table[i][j]) : 0;
+    for (let i = 0; i < game.play.length; i++) {
+      for (let j = 0; j < game.play[0].length; j++) {
+        array[j] += parseInt(game.play[i][j]) ? parseInt(game.play[i][j]) : 0;
       }
     }
     setResult(array);
@@ -78,22 +88,21 @@ function Play(props) {
       newRank[ele.index] = i;
     }
     setRank(newRank);
-    if (
-      props.game.numOfGame &&
-      table.length === parseInt(props.game.numOfGame)
-    ) {
+    if (game.numOfGames && game.play.length === parseInt(game.numOfGames)) {
       sethideAdd(true);
     }
-  }, [table]);
+  }, [game.play]);
 
   useEffect(() => {
-    const array = [];
-    for (let i = 0; i < props.game.numOfMember; i++) {
-      array.push("");
+    if (!game.play[0]) {
+      const array = [];
+      for (let i = 0; i < game.numOfMembers; i++) {
+        array.push("");
+      }
+      const newTable = [];
+      newTable[0] = array;
+      dispatch(changePlay(newTable));
     }
-    const newTable = [];
-    newTable[0] = array;
-    setTable(newTable);
   }, []);
 
   return (
@@ -114,7 +123,7 @@ function Play(props) {
               id="logo"
               alt="poker"
             />
-            {props.game.numOfGame && (
+            {game.numOfGames && (
               <Navbar.Brand
                 style={{
                   lineHeight: "40px",
@@ -124,7 +133,7 @@ function Play(props) {
                   display: "inline-block",
                 }}
               >
-                {"Còn " + (props.game.numOfGame - table.length) + " ván"}
+                {"Còn " + (game.numOfGames - game.play.length) + " ván"}
               </Navbar.Brand>
             )}
           </div>
@@ -132,20 +141,24 @@ function Play(props) {
             {!done && (
               <button className="circle-btn" onClick={hideClick}>
                 {!hide ? (
-                  <AiFillEye size={25} />
+                  <AiFillEye size={25} color="#212529" />
                 ) : (
-                  <AiFillEyeInvisible size={25} />
+                  <AiFillEyeInvisible color="#212529" size={25} />
                 )}
               </button>
             )}
             {!done && (
               <button className="circle-btn">
-                <IoCheckmarkDoneCircle size={25} onClick={finish} />
+                <IoCheckmarkDoneCircle
+                  color="#212529"
+                  size={25}
+                  onClick={finish}
+                />
               </button>
             )}
             {!done && !hideAdd && (
               <button className="circle-btn" onClick={addGame}>
-                <IoMdAddCircle size={25} />
+                <IoMdAddCircle color="#212529" size={25} />
               </button>
             )}
             {done && (
@@ -165,7 +178,7 @@ function Play(props) {
           <thead>
             <tr>
               <th>#</th>
-              {props.game.members.map((ele) => (
+              {game.members.map((ele) => (
                 <th style={{ textAlign: "center" }} key={ele}>
                   {ele}
                 </th>
@@ -173,7 +186,7 @@ function Play(props) {
             </tr>
           </thead>
           <tbody>
-            {table.map((row, index) => (
+            {game.play.map((row, index) => (
               <Row
                 key={index}
                 index={index + 1}
