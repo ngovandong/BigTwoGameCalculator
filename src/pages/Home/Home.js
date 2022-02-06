@@ -6,7 +6,7 @@ import AddGame from "../../Modal/AddGame";
 import AddMembers from "../../Modal/AddMembers";
 import "./Home.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setDone } from "../../features/Game/gameSlice";
+import { reset, setDone } from "../../features/Game/gameSlice";
 function Home(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ function Home(props) {
     if (!game.done) {
       navigate("/play");
     }
+    dispatch(reset(""));
   }, []);
   return (
     <div className="home">
