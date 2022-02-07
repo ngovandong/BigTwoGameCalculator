@@ -26,8 +26,9 @@ function Home(props) {
   useEffect(() => {
     if (!game.done) {
       navigate("/play");
+    } else {
+      dispatch(reset(""));
     }
-    dispatch(reset(""));
   }, []);
   return (
     <div className="home">
