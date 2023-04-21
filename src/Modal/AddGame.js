@@ -1,13 +1,14 @@
 import { Form, Button, Modal, Alert } from "react-bootstrap";
 import React, { useRef, useState } from "react";
-import {useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 import { addGame } from "../features/Game/gameSlice";
 export default function AddGame(props) {
   const [error, setError] = useState("");
   const [toggle, setToggle] = useState(false);
-  const numOfMember = useRef(0);
-  const games = useRef(0);
-  const dispatch= useDispatch();
+
+  const numOfMember = useRef();
+  const games = useRef();
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     props.setShow(false);
@@ -54,6 +55,7 @@ export default function AddGame(props) {
                 type="number"
                 ref={numOfMember}
                 required
+                defaultValue={4}
                 min={2}
                 max={4}
               />
@@ -69,7 +71,11 @@ export default function AddGame(props) {
             {toggle && (
               <Form.Group id="numbers">
                 <Form.Label>Số ván</Form.Label>
-                <Form.Control type="number" ref={games} min={1} />
+                <Form.Control
+                  type="number"
+                  ref={games}
+                  min={1}
+                />
               </Form.Group>
             )}
           </Form>

@@ -3,6 +3,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMembers } from "../features/Game/gameSlice";
 
+const fix_members = ["Tiền", "Thọ", "Bình", "Vĩ"];
+
 export default function AddMembers(props) {
   const dispatch = useDispatch();
   const game = useSelector((state) => state.game);
@@ -29,7 +31,7 @@ export default function AddMembers(props) {
               <Form.Group className="player" id={id} key={id}>
                 <Form.Label>Player {id + 1}</Form.Label>
                 <Form.Control
-                  defaultValue={"player" + (id + 1)}
+                  defaultValue={fix_members[id]}
                   type="text"
                   required
                 />
